@@ -1,35 +1,9 @@
-# FE-perpus
+# Final Project
 
-This template should help get you started developing with Vue 3 in Vite.
+## link deploy FE : https://fe-perpus.vercel.app/
 
-## Recommended IDE Setup
+## link deploy BE : https://be-perpus-production-0f16.up.railway.app/api/v1
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## link dokumentasi API : https://documenter.getpostman.com/view/26361528/2sA3s3HBT7#9e4d8201-a739-4dd3-965a-8cb6b09420d9
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+## link video simulasi : https://youtu.be/GJrEOyqmsco
