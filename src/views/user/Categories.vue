@@ -7,7 +7,7 @@
         </div>
 
         <!-- Skeleton Loading for No Books -->
-        <div v-if="loading" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div v-if="loading" class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <BookCardSkeleton v-for="n in 8" :key="n" />
         </div>
 
@@ -17,7 +17,7 @@
         </div>
 
         <!-- Book List -->
-        <div v-else class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div v-else class="grid grid-cols-grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <BookCard v-for="book in category?.list_books" :key="book.id" :book="book" :category="category" />
         </div>
     </div>
