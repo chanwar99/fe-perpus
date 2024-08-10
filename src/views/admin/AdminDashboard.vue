@@ -41,7 +41,7 @@
                                     <div class="bg-gray-800 h-6 w-40 animate-pulse"></div>
                                 </td>
                             </tr>
-                            <tr v-else v-for="borrow in borrows" :key="borrow.id" v-if="borrow.length != 0">
+                            <tr v-else v-for="borrow in borrows" :key="borrow.id" v-if="borrows.length != 0">
                                 <td class="border border-gray-800 whitespace-nowrap">
                                     <div class="flex items-start gap-3">
                                         <div class="avatar">
