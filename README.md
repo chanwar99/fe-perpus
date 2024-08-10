@@ -1,5 +1,7 @@
 # Final Project
 
+### akun owner : email => owner@mail.com, password => 12345678
+
 ### link deploy FE : https://fe-perpus.vercel.app/
 
 ### link deploy BE : https://be-perpus-production-0f16.up.railway.app/api/v1
