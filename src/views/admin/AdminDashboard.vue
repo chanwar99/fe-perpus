@@ -41,7 +41,7 @@
                                     <div class="bg-gray-800 h-6 w-40 animate-pulse"></div>
                                 </td>
                             </tr>
-                            <tr v-else v-for="borrow in borrows" :key="borrow.id">
+                            <tr v-else-if="!loading" v-for="borrow in borrows" :key="borrow.id">
                                 <td class="border border-gray-800 whitespace-nowrap">
                                     <div class="flex items-start gap-3">
                                         <div class="avatar">
@@ -63,6 +63,11 @@
                                     formatDate(borrow?.load_date) }}</td>
                                 <td class="border border-gray-800 align-top whitespace-nowrap">{{ borrow?.barrow_date ?
                                     formatDate(borrow?.barrow_date) : '-' }}</td>
+                            </tr>
+                            <tr v-else-if="borrows.length == 0">
+                                <td colspan="4" class="text-center">
+                                    <p>No borrow available.</p>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
