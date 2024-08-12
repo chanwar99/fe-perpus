@@ -64,7 +64,7 @@
                                 <td class="border border-gray-800 align-top whitespace-nowrap">{{ borrow?.barrow_date ?
                                     formatDate(borrow?.barrow_date) : '-' }}</td>
                             </tr>
-                            <tr v-else-if="borrows.length == null">
+                            <tr v-else-if="borrows == null">
                                 <td colspan="4" class="text-center">
                                     <p>No borrow available.</p>
                                 </td>
@@ -97,6 +97,7 @@ const fetchBorrows = async () => {
         NProgress.start();
         await borrowStore.fetchAllBorrows();
         borrows.value = borrowStore.borrows;
+        console.log(borrows.value);
     } catch (error) {
         console.error('Failed to load borrows:', error);
     } finally {
