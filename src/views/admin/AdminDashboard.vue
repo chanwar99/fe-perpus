@@ -64,7 +64,7 @@
                                 <td class="border border-gray-800 align-top whitespace-nowrap">{{ borrow?.barrow_date ?
                                     formatDate(borrow?.barrow_date) : '-' }}</td>
                             </tr>
-                            <tr v-else-if="borrows.length == 0">
+                            <tr v-else-if="borrows.length == null">
                                 <td colspan="4" class="text-center">
                                     <p>No borrow available.</p>
                                 </td>
