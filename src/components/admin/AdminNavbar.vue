@@ -20,7 +20,7 @@
                     </svg>
                 </label>
             </div>
-            <a class="btn btn-ghost text-xl">Admin Perpus</a>
+            <a class="btn btn-ghost text-xl">Admin E-LIB</a>
         </div>
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal space-x-1">

@@ -2,23 +2,20 @@
     <div class="container mx-auto py-8 px-4 md:px-0">
         <div class="flex mb-4">
             <div class="flex-1">
-                <h2 class="text-3xl font-bold mb-2 flex-1">{{ category?.name }}</h2>
+                <h2 class="text-3xl font-bold mb-2 flex-1">Latest Book</h2>
             </div>
         </div>
-
-        <!-- No Books Available -->
-        <div v-if="!loading && paginatedBooks.length === 0" class="py-2">
+        <div v-if="paginatedBooks.length === 0 && !loading" class="py-2">
             <p>No books available.</p>
         </div>
         <div v-else>
-            <!-- Skeleton Loading for No Books -->
+            <!-- Skeleton Loading -->
             <div v-if="loading" class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 <BookCardSkeleton v-for="n in 4" :key="n" />
             </div>
-
-            <!-- Book List -->
-            <div v-else class="grid grid-cols-grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                <BookCard v-for="book in paginatedBooks" :key="book.id" :book="book" :category="category" />
+            <!-- Actual Data -->
+            <div v-else class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                <BookCard v-for="book in paginatedBooks" :key="book.id" :book="book" />
             </div>
         </div>
         <!-- Pagination -->
@@ -39,31 +36,31 @@
 </template>
 
 <script setup>
+import { ref, computed, onMounted, watch } from 'vue';
+import { useBookStore } from '@/stores/bookStore';
 import BookCard from '@/components/user/BookCard.vue';
 import BookCardSkeleton from '@/components/common/BookCardSkeleton.vue';
-import { ref, watch, onMounted, computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useCategoryStore } from '@/stores/categoryStore';
-import { usePaginationStore } from '@/stores/paginationStore';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
+import { useRoute, useRouter } from 'vue-router';
+import { usePaginationStore } from '@/stores/paginationStore';
 
+const bookStore = useBookStore();
 const paginationStore = usePaginationStore();
-const categoryStore = useCategoryStore();
 const route = useRoute();
 const router = useRouter();
-const category = ref(null);
+const books = ref([]);
 const loading = ref(true);
 
-const fetchCategory = async (id) => {
+const fetchBooks = async () => {
     try {
         loading.value = true;
         NProgress.start();
-        await categoryStore.fetchCategoryById(id);
-        category.value = categoryStore.category?.list_books;
+        await bookStore.fetchBooks();
+        books.value = bookStore.books;
         updatePagination();
-    } catch (err) {
-        console.error(err);
+    } catch (error) {
+        console.error('Error fetching books:', error);
     } finally {
         loading.value = false;
         NProgress.done();
@@ -71,15 +68,14 @@ const fetchCategory = async (id) => {
 };
 
 const updatePagination = () => {
-    const filteredResults = category.value.length;
+    const filteredResults = books.value.length;
     paginationStore.updateTotalPages(filteredResults);
 };
-
 
 const paginatedBooks = computed(() => {
     const start = (paginationStore.currentPage - 1) * 4;
     const end = start + 4;
-    return category.value.slice(start, end);
+    return books.value.slice(start, end);
 });
 
 const currentPage = computed(() => paginationStore.currentPage);
@@ -88,33 +84,29 @@ const totalPages = computed(() => paginationStore.totalPages);
 const goToPage = (page) => {
     if (page >= 1 && page <= totalPages.value) {
         paginationStore.setCurrentPage(page);
-        router.push({ query: { q: paginationStore.searchKeyword, page } });
+        router.push({ query: { q: route.query.q, page } });
     }
 };
+
 onMounted(() => {
     const page = parseInt(route.query.page, 10) || 1;
     paginationStore.setCurrentPage(page);
-    fetchCategory(route.params.id);
+    fetchBooks();
 });
 
-watch(
-    () => route.params.id,
-    (newCategoryId) => {
-        fetchCategory(newCategoryId);
-    }
-);
 
 watch(
     () => route.query.page,
     (newPage) => {
         const page = parseInt(newPage, 10) || 1;
         paginationStore.setCurrentPage(page);
-        fetchCategory(route.params.id);
+        fetchBooks();
     },
     { immediate: true }
 );
 
-
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Add any specific styling here if needed */
+</style>

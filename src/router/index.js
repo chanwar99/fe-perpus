@@ -4,8 +4,10 @@ import AuthLayout from '@/layouts/AuthLayout.vue'
 import AdminLayout from '@/layouts/AdminLayout.vue'
 import Home from '@/views/user/Home.vue'
 import UserProfile from '@/views/user/UserProfile.vue'
-import BookDetails from '@/views/user/BookDetails.vue'
 import Categories from '@/views/user/Categories.vue'
+import Books from '@/views/user/Books.vue'
+import BookDetails from '@/views/user/BookDetails.vue'
+import SearchResults from '@/views/user/SearchResults.vue' // Import the SearchResults component
 import Login from '@/views/auth/Login.vue'
 import Register from '@/views/auth/Register.vue'
 import AdminDashboard from '@/views/admin/AdminDashboard.vue'
@@ -23,7 +25,9 @@ const routes = [
       { path: '', name: 'Home', component: Home },
       { path: 'book/:id', name: 'BookDetail', component: BookDetails },
       { path: 'categories/:id', name: 'BookCategory', component: Categories },
-      { path: 'profile', name: 'UserProfile', component: UserProfile }
+      { path: 'books', name: 'Books', component: Books },
+      { path: 'profile', name: 'UserProfile', component: UserProfile },
+      { path: 'search', name: 'Search', component: SearchResults } // Add search route
     ]
   },
   {
@@ -46,6 +50,7 @@ const routes = [
     ]
   }
 ]
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
@@ -70,16 +75,20 @@ router.beforeEach((to, from, next) => {
       return next({ name: 'Home' })
     }
 
-    if (userRole === 'owner' && from.name == 'Login' && to.path.startsWith('/')) {
+    if (userRole === 'owner' && from.name === 'Login' && to.path.startsWith('/')) {
       return next({ name: 'Dashboard' })
     }
   } else {
-    if (to.path.startsWith('/admin') || to.name == 'UserProfile') {
+    if (to.path.startsWith('/admin') || to.name === 'UserProfile') {
       return next({ name: 'Home' })
     }
   }
 
   next()
+})
+
+router.afterEach(() => {
+  window.scrollTo(0, 0)
 })
 
 export default router
