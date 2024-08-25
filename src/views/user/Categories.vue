@@ -2,7 +2,7 @@
     <div class="container mx-auto py-8 px-4 md:px-0">
         <div class="flex mb-4">
             <div class="flex-1">
-                <h2 class="text-3xl font-bold mb-2 flex-1">{{ category?.name }}</h2>
+                <h2 class="text-3xl font-bold mb-2 flex-1">{{ categoryStore.category?.name }}</h2>
             </div>
         </div>
 
